@@ -36,7 +36,9 @@
         <div class="page-title" id="pageTitle">داشبورد</div>
         <div class="page-subtitle" id="pageSubtitle">نمای کلی بازار</div>
       </div>
-      <div style="display:flex; gap:10px; align-items:center;">
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <span class="connection-status" id="connectionStatus">به پوشه sahm متصل نیستید</span>
+        <button class="btn btn-primary" id="connectBtn">📁 اتصال پوشه sahm</button>
         <select class="symbol-select" id="symbolSelect"></select>
         <button class="btn" id="refreshBtn">🔄 بروزرسانی</button>
       </div>
@@ -73,6 +75,7 @@
 
 <!-- ابزارهای مشترک -->
 <script src="js/utils.js"></script>
+<script src="js/csv.js"></script>
 <script src="js/api.js"></script>
 
 <!-- ماژول‌های تحلیل پایه -->
