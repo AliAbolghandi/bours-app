@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحلیل تکنیکال بورس اوراق بهادار ایران</title>
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/rtl.css">
+
+<script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- نوار کناری -->
+  <aside class="sidebar">
+    <div class="brand"><span class="logo-dot"></span> تحلیل‌گر بورس</div>
+
+    <div class="nav-item active" data-page="dashboard">📊 داشبورد</div>
+    <div class="nav-item" data-page="analysis">🧮 تحلیل تکنیکال</div>
+    <div class="nav-item" data-page="chart">📈 نمودار تعاملی</div>
+    <div class="nav-item" data-page="settings">⚙️ تنظیمات</div>
+  </aside>
+
+  <!-- محتوای اصلی -->
+  <main class="main-content">
+
+    <div class="topbar">
+      <div>
+        <div class="page-title" id="pageTitle">داشبورد</div>
+        <div class="page-subtitle" id="pageSubtitle">نمای کلی بازار</div>
+      </div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <select class="symbol-select" id="symbolSelect"></select>
+        <button class="btn" id="refreshBtn">🔄 بروزرسانی</button>
+      </div>
+    </div>
+
+    <!-- صفحه داشبورد -->
+    <section class="page active" id="page-dashboard">
+      <div id="dashboardContainer"><div class="loading">در حال بارگذاری...</div></div>
+    </section>
+
+    <!-- صفحه تحلیل تکنیکال (خروجی اصلی) -->
+    <section class="page" id="page-analysis">
+      <div id="summaryContainer" class="glass" style="padding:20px;"></div>
+    </section>
+
+    <!-- صفحه نمودار تعاملی -->
+    <section class="page" id="page-chart">
+      <div class="chart-toolbar">
+        <label><input type="checkbox" class="overlay-toggle" data-overlay="ma" checked> میانگین متحرک</label>
+        <label><input type="checkbox" class="overlay-toggle" data-overlay="ema"> EMA</label>
+        <label><input type="checkbox" class="overlay-toggle" data-overlay="bollinger"> باند بولینگر</label>
+        <label><input type="checkbox" class="overlay-toggle" data-overlay="levels" checked> حمایت/مقاومت</label>
+      </div>
+      <div id="chartContainer"></div>
+    </section>
+
+    <!-- صفحه تنظیمات -->
+    <section class="page" id="page-settings">
+      <div id="settingsContainer" class="glass" style="padding:20px;"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ابزارهای مشترک -->
+<script src="js/utils.js"></script>
+<script src="js/api.js"></script>
+
+<!-- ماژول‌های تحلیل پایه -->
+<script src="js/atr.js"></script>
+<script src="js/adx.js"></script>
+<script src="js/movingAverage.js"></script>
+<script src="js/ema.js"></script>
+<script src="js/rsi.js"></script>
+<script src="js/macd.js"></script>
+<script src="js/bollinger.js"></script>
+<script src="js/stochastic.js"></script>
+<script src="js/cci.js"></script>
+<script src="js/mfi.js"></script>
+<script src="js/obv.js"></script>
+<script src="js/vwap.js"></script>
+<script src="js/pivot.js"></script>
+<script src="js/fibonacci.js"></script>
+<script src="js/ichimoku.js"></script>
+
+<!-- ساختار قیمت و حجم -->
+<script src="js/priceAction.js"></script>
+<script src="js/candlestick.js"></script>
+<script src="js/patterns.js"></script>
+<script src="js/divergence.js"></script>
+<script src="js/volume.js"></script>
+<script src="js/smartMoney.js"></script>
+<script src="js/support.js"></script>
+<script src="js/trend.js"></script>
+<script src="js/risk.js"></script>
+
+<!-- موتور امتیازدهی و صفحات -->
+<script src="js/score.js"></script>
+<script src="js/summary.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/settings.js"></script>
+
+<!-- راه‌انداز نهایی -->
+<script src="js/app.js"></script>
+
+</body>
+</html>
