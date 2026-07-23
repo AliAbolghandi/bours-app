@@ -1,65 +1,72 @@
 # تحلیل‌گر بورس اوراق بهادار ایران
 
-اپلیکیشن تحلیل تکنیکال Production-Ready برای بورس ایران با Backend روی Google Apps Script
-و Database روی Google Sheets. تمام رابط کاربری فارسی و RTL است.
+اپلیکیشن تحلیل تکنیکال **کاملاً لوکال** برای بورس ایران. هیچ بک‌اند، سرور یا
+Google Apps Script/Sheets ای در کار نیست — تمام محاسبات در همان مرورگر شما
+انجام می‌شود و منبع داده، فایل‌های CSV داخل پوشه‌ی `sahm` است.
 
 ## ساختار پروژه
 
 ```
 bourse-app/
-├── index.html              # نقطه ورود
+├── index.html
+├── sahm/                    # فایل‌های CSV نمادها را اینجا بریزید
+│   ├── README.md
+│   └── sample.csv           # نمونه فرمت
 ├── css/
-│   ├── style.css           # استایل اصلی، کارت‌ها، جدول، گیج
-│   ├── rtl.css              # چیدمان راست‌به‌چپ
-│   └── theme.css            # توکن‌های رنگی تیره/روشن
-├── js/
-│   ├── utils.js / api.js    # ابزار مشترک + کلاینت API
-│   ├── trend.js, support.js, movingAverage.js, ema.js, rsi.js,
-│   │   macd.js, adx.js, atr.js, bollinger.js, stochastic.js,
-│   │   cci.js, mfi.js, obv.js, vwap.js, pivot.js, fibonacci.js,
-│   │   ichimoku.js          # ۱۹ ماژول اندیکاتور مستقل
-│   ├── priceAction.js, candlestick.js, patterns.js, divergence.js
-│   ├── volume.js, smartMoney.js, risk.js
-│   ├── score.js             # موتور امتیازدهی مرکزی
-│   ├── summary.js           # جدول خلاصه (خروجی اصلی)
-│   ├── dashboard.js, chart.js, settings.js
-│   └── app.js               # مسیریاب و راه‌انداز
-└── gas/
-    └── Code.gs               # بک‌اند Google Apps Script (REST API)
+│   ├── style.css
+│   ├── rtl.css
+│   └── theme.css
+└── js/
+    ├── csv.js                # پارسر فایل‌های CSV
+    ├── api.js                 # اتصال لوکال به پوشه‌ی sahm (File System Access API)
+    ├── utils.js
+    ├── trend.js, support.js, movingAverage.js, ema.js, rsi.js,
+    │   macd.js, adx.js, atr.js, bollinger.js, stochastic.js,
+    │   cci.js, mfi.js, obv.js, vwap.js, pivot.js, fibonacci.js,
+    │   ichimoku.js            # ۱۹ ماژول اندیکاتور مستقل
+    ├── priceAction.js, candlestick.js, patterns.js, divergence.js
+    ├── volume.js, smartMoney.js, risk.js
+    ├── score.js               # موتور امتیازدهی مرکزی
+    ├── summary.js              # جدول خلاصه (خروجی اصلی)
+    ├── dashboard.js, chart.js, settings.js
+    └── app.js                  # مسیریاب و راه‌انداز
 ```
 
-## راه‌اندازی بک‌اند (Google Apps Script)
+## استفاده
 
-1. یک Google Sheet جدید بسازید و شیتی با نام دقیق `Data` ایجاد کنید.
-2. ردیف اول را با این هدرها پر کنید (دقیقاً به همین ترتیب):
-   `Ticker | DTYYYYMMDD | FIRST | HIGH | LOW | CLOSE | VALUE | VOL | OPENINT | PER | OPEN | LAST`
-3. داده‌های تاریخی هر نماد را از ردیف دوم به بعد وارد کنید.
-4. از منوی شیت: `Extensions > Apps Script` را باز کنید و محتوای `gas/Code.gs` را جایگزین کد پیش‌فرض کنید.
-5. `Deploy > New deployment > Web app`:
-   - Execute as: **Me**
-   - Who has access: **Anyone** (یا طبق نیاز شما محدودتر)
-6. آدرس دیپلوی (`.../exec`) را کپی کنید.
+1. پوشه‌ی کامل `bourse-app` را روی سیستم خودتان نگه دارید (یا با هر سرور
+   استاتیک ساده‌ای مثل `npx serve` اجرا کنید — باز کردن مستقیم با `file://`
+   هم در بیشتر مرورگرها کار می‌کند).
+2. فایل‌های CSV نمادهای خودتان را داخل پوشه‌ی `sahm/` بریزید. فرمت دقیق در
+   `sahm/README.md` توضیح داده شده و یک نمونه (`sample.csv`) هم آنجاست.
+3. `index.html` را در مرورگر باز کنید و روی دکمه‌ی «📁 اتصال پوشه sahm»
+   بزنید و همان پوشه‌ی `sahm` را انتخاب کنید.
+4. تمام نمادهای موجود در فایل‌های CSV به‌طور خودکار در داشبورد نمایش داده
+   می‌شوند، هرکدام با تحلیل کامل و امتیاز فنی مخصوص خودشان.
+5. هر وقت فایل جدیدی به پوشه اضافه کردید یا فایلی را ویرایش کردید، دوباره
+   روی «🔄 بروزرسانی» بزنید تا داده‌ها از دیسک دوباره خوانده شوند.
 
-## اتصال فرانت‌اند به بک‌اند
+## نکته درباره مرورگرها
 
-در فایل `js/api.js` مقدار `BASE_URL` را با آدرس دیپلوی خودتان جایگزین کنید:
-
-```js
-const BASE_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
-```
-
-## اجرای فرانت‌اند
-
-چون فرانت‌اند کاملاً استاتیک است (HTML/CSS/Vanilla JS)، کافی است پوشه را روی هر
-سرور استاتیک (GitHub Pages، Netlify، یا حتی یک سرور محلی ساده) میزبانی کنید.
-شیت گوگل همیشه خصوصی باقی می‌ماند؛ فرانت‌اند فقط با Apps Script صحبت می‌کند.
+- **Chrome / Edge / Opera**: از File System Access API استفاده می‌شود.
+  بعد از اولین اتصال، مرورگر اجازه‌ی دسترسی به همان پوشه را (با یک تأیید
+  سریع) در بازدیدهای بعدی هم به خاطر می‌سپارد — نیازی به انتخاب مجدد پوشه
+  در هر بار نیست.
+- **Safari / Firefox**: این مرورگرها از File System Access API پشتیبانی
+  نمی‌کنند؛ برنامه به‌صورت خودکار به انتخاب پوشه با `<input webkitdirectory>`
+  سوییچ می‌کند و کار می‌کند، با این تفاوت که باید هر بار پوشه را دوباره
+  انتخاب کنید (چون این مرورگرها اجازه‌ی نگه‌داشتن دسترسی دائمی نمی‌دهند).
 
 ## نکات فنی
 
-- کش سمت سرور با `CacheService` (۵ دقیقه) و کش سمت کلاینت در `api.js` انجام می‌شود.
-- امتیاز فنی (Technical Score) از نرمال‌سازی مجموع امتیاز وزن‌دار همه‌ی ماژول‌ها به بازه ۰ تا ۱۰۰ به دست می‌آید.
-- درصد خرید (Buy Percentage) ترکیبی از امتیاز فنی و نسبت سیگنال‌های خرید/فروش است.
-- برای افزودن اندیکاتور جدید: یک فایل جدید در `js/` با متد `analyze(candles, settings)`
-  بسازید که آبجکتی با فیلدهای `key, title, currentValue, interpretation, signal, weight, score, maxScore, raw`
-  برگرداند، آن را در `js/score.js` (`MODULE_RUNNERS`) و `js/summary.js` (`ROW_ORDER`) ثبت کنید،
-  و تگ `<script>` آن را در `index.html` اضافه کنید.
+- هیچ درخواست شبکه‌ای برای داده رد و بدل نمی‌شود؛ `js/api.js` مستقیماً از
+  دیسک می‌خواند.
+- امتیاز فنی (Technical Score) از نرمال‌سازی مجموع امتیاز وزن‌دار همه‌ی
+  ماژول‌ها به بازه ۰ تا ۱۰۰ به دست می‌آید.
+- درصد خرید (Buy Percentage) ترکیبی از امتیاز فنی و نسبت سیگنال‌های
+  خرید/فروش است.
+- برای افزودن اندیکاتور جدید: یک فایل جدید در `js/` با متد
+  `analyze(candles, settings)` بسازید که آبجکتی با فیلدهای
+  `key, title, currentValue, interpretation, signal, weight, score, maxScore, raw`
+  برگرداند، آن را در `js/score.js` (`MODULE_RUNNERS`) و `js/summary.js`
+  (`ROW_ORDER`) ثبت کنید، و تگ `<script>` آن را در `index.html` اضافه کنید.
