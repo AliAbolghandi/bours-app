@@ -7,7 +7,7 @@ const Api = (() => {
 
   // آدرس دیپلوی Web App خود را اینجا جایگزین کنید
   // Deploy > New deployment > Web app > Execute as: Me > Who has access: Anyone
-  const BASE_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+  const BASE_URL = 'https://script.google.com/macros/s/AKfycbw7nnD5wNXZ6lqUfJCNrx_O0vvkoKaRIQ3l6wJawrxAqPMHOPE-bdSBEYR9WGL0GsbQ/exec';
 
   const _cache = new Map();
 
