@@ -1,0 +1,40 @@
+/* rtl.css — چیدمان راست‌به‌چپ */
+
+html {
+  direction: rtl;
+}
+
+body {
+  text-align: right;
+  font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+}
+
+.app-shell {
+  direction: rtl;
+}
+
+.sidebar {
+  border-left: 1px solid var(--border-color);
+  border-right: none;
+}
+
+.summary-table th:first-child,
+.summary-table td:first-child {
+  border-radius: 0 10px 10px 0;
+}
+
+.summary-table th:last-child,
+.summary-table td:last-child {
+  border-radius: 10px 0 0 10px;
+}
+
+input, select, button {
+  font-family: inherit;
+  direction: rtl;
+}
+
+/* اعداد و نمودار همچنان LTR نمایش داده شوند تا خوانا بمانند */
+.stock-price, .big-number, .mini-gauge span, .gauge span {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
